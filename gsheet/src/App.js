@@ -60,8 +60,9 @@ function installTrigger(minutes) {
   removeTriggers();
   ScriptApp.newTrigger('autoTick').timeBased().everyMinutes(minutes).create();
   setProp('auto', String(minutes));
-  SpreadsheetApp.getActive().setSpreadsheetTimeZone('Asia/Taipei');
-  SpreadsheetApp.getActive().setRecalculationInterval(SpreadsheetApp.RecalculationInterval.ON_CHANGE_AND_MINUTE);
+  // 時區、每分鐘重算（「幾分鐘前」與過舊提醒用）只是顯示用，設定失敗不影響更新
+  try { SpreadsheetApp.getActive().setSpreadsheetTimeZone('Asia/Taipei'); } catch (e) {}
+  try { SpreadsheetApp.getActive().setRecalculationInterval(SpreadsheetApp.RecalculationInterval.ON_CHANGE_AND_MINUTE); } catch (e) {}
   toast('已開啟自動更新：每 ' + minutes + ' 分鐘檢查一次，只在交易時段（與收盤後存檔）真的更新。先更新一次…');
   toast(runUpdate({manual: true}));
 }
