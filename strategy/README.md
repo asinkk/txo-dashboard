@@ -11,6 +11,7 @@
 | `optimize.py` | v2 參數搜尋：前 16 個月挑參數，後 8 個月驗證 |
 | `simulate.py` | 固定口數試算帳戶金額（預設 20 萬、1 口微台、每次下單 25 元），含買進持有對照 |
 | `forward.py` | v3 前測：每天用累積的台指期日夜盤資料跑 v3，輸出 `docs/strategy.html` 與 `history/forward_trades.csv`（2026/11/9 起算前測） |
+| `fetch_shioaji.py` | 用永豐金 Shioaji API（要永豐期貨帳戶的 API 金鑰）抓 2020-03-22 起的台指期 1 分K（含夜盤），存成 `history/tx_1min_sj/`，格式同 `history/tx_1min/`，可直接用 `build_bars.py` 合成多年 60 分K |
 | `fetch_tx_daily.py` | 期交所台指期每日行情（2024 年起，日盤與夜盤分列），存到 `history/tx_daily.csv`；D2 只取日盤當日K 指標暖機 |
 | `live.py` | 即時訊號頁：history 加上期交所即時 1 分K（MIS getChartData1M），算 v3（60 分K，含夜盤）與 D2（台指期日K，只算日盤）目前的部位、停損、訊號與進場條件，輸出 `docs/live.html`、`docs/live.json`；`--record` 另存 D2 交易紀錄 |
 | `trades_page.py` | 歷史成交紀錄頁 `docs/trades.html`（台指期累積資料＋近 2 年加權指數回測，v3 與 D2 每一筆，時間到分鐘），由 `live.py` 產生 |
