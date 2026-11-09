@@ -1,0 +1,32 @@
+name: 排程鬧鐘
+
+# GitHub 的 schedule 常延誤或整段漏跑（11/6 夜盤 30 次只跑 1 次）。
+# 這個 workflow 一被叫醒就自己看時鐘，照 txo.yml、strategy-live.yml、tx-ticks.yml 的 cron
+# 準時用 workflow_dispatch 觸發它們（GITHUB_TOKEN 觸發 workflow_dispatch 是允許的）。
+# 那三個原本的 schedule 保留當備援，重複觸發只會多排一次隊、沒有新資料就不 commit。
+on:
+  schedule:
+    # UTC。台北 08:40 開盤前，加上交易時段每小時一次備援（已有鬧鐘在跑就馬上結束）
+    - cron: "40 0-5 * * 1-5"
+    - cron: "55 6-20 * * 1-5"
+    # 台北 06:20（週一到週六），給 06:30 存 1 分K
+    - cron: "20 22 * * 0-5"
+  workflow_dispatch: {}
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github
+      - name: 照 cron 準時觸發各 workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python3 .github/clock.py
