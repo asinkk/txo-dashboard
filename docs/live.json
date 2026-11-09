@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-09 13:48",
- "prev_generated": "2026-11-09 13:35",
+ "generated": "2026-11-09 15:04",
+ "prev_generated": "2026-11-09 13:48",
  "gap": [],
- "last_price": 41423.0,
+ "last_price": 41244.0,
  "history_last": "2026-11-07 04:59",
- "live_minutes_added": 300,
+ "live_minutes_added": 305,
  "live": {
   "日盤": {
    "symbol": "TXFK6-F",
@@ -18,17 +18,17 @@
   "夜盤": {
    "symbol": "TXFK6-M",
    "name": "臺指期116",
-   "last": 40298.0,
-   "ref": 39652.0,
-   "date": "20261106",
-   "last_minute": "2026-11-07 04:59",
-   "minutes": 837
+   "last": 41244.0,
+   "ref": 41478.0,
+   "date": "20261109",
+   "last_minute": "2026-11-09 15:04",
+   "minutes": 5
   }
  },
  "v3": {
-  "bar": "2026-11-09 12:45",
-  "bar_end": "13:45",
-  "forming": false,
+  "bar": "2026-11-09 15:00",
+  "bar_end": "16:00",
+  "forming": true,
   "pos": null,
   "sig": null,
   "checks": {
@@ -37,34 +37,34 @@
      {
       "name": "可進場時段",
       "ok": false,
-      "detail": "12:45 這根"
+      "detail": "15:00 這根"
      },
      {
       "name": "趨勢 EMA20 > EMA60",
       "ok": false,
-      "detail": "40,937 / 41,541"
+      "detail": "40,966 / 41,531"
      }
     ],
     "突破": [
      {
       "name": "紅K 實體 ≥ 高低差一半",
       "ok": false,
-      "detail": "實體 -446、高低差 554"
+      "detail": "實體 +4、高低差 214"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 459 點"
+      "detail": "需 458 點"
      },
      {
       "name": "收盤站上布林上軌",
       "ok": false,
-      "detail": "上軌 42,053"
+      "detail": "上軌 42,083"
      },
      {
       "name": "MACD 柱翻正",
       "ok": true,
-      "detail": "+225.1"
+      "detail": "+173.7"
      }
     ],
     "拉回": [
@@ -76,7 +76,7 @@
      {
       "name": "低點碰到 EMA20",
       "ok": false,
-      "detail": "EMA20 40,937"
+      "detail": "EMA20 40,966"
      },
      {
       "name": "收盤站回 EMA20",
@@ -86,18 +86,18 @@
      {
       "name": "收盤過前一根高點",
       "ok": false,
-      "detail": "41,999"
+      "detail": "41,954"
      },
      {
       "name": "EMA60 比 5 根前高",
       "ok": true,
-      "detail": "+44"
+      "detail": "+31"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 41136.98775133471,
-     "raw": 80.20244973305671
+     "stop": 40966.38148338223,
+     "raw": 213.5237033235535
     }
    },
    "空": {
@@ -105,46 +105,46 @@
      {
       "name": "可進場時段",
       "ok": false,
-      "detail": "12:45 這根"
+      "detail": "15:00 這根"
      },
      {
       "name": "趨勢 EMA20 < EMA60",
       "ok": true,
-      "detail": "40,937 / 41,541"
+      "detail": "40,966 / 41,531"
      }
     ],
     "突破": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
-      "ok": true,
-      "detail": "實體 -446、高低差 554"
+      "ok": false,
+      "detail": "實體 +4、高低差 214"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 459 點"
+      "detail": "需 458 點"
      },
      {
       "name": "收盤跌破布林下軌",
       "ok": false,
-      "detail": "下軌 39,299"
+      "detail": "下軌 39,415"
      },
      {
       "name": "MACD 柱翻負",
       "ok": false,
-      "detail": "+225.1"
+      "detail": "+173.7"
      }
     ],
     "拉回": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
-      "ok": true,
+      "ok": false,
       "detail": ""
      },
      {
       "name": "高點碰到 EMA20",
       "ok": true,
-      "detail": "EMA20 40,937"
+      "detail": "EMA20 40,966"
      },
      {
       "name": "收盤壓回 EMA20",
@@ -154,18 +154,18 @@
      {
       "name": "收盤破前一根低點",
       "ok": true,
-      "detail": "41,784"
+      "detail": "41,400"
      },
      {
       "name": "EMA60 比 5 根前低",
       "ok": false,
-      "detail": "+44"
+      "detail": "+31"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 42011.20244973306,
-     "raw": 588.2024497330567
+     "stop": 41521.61851661777,
+     "raw": 111.52370332355349
     }
    }
   },
@@ -314,11 +314,11 @@
   },
   "events": [],
   "levels": {
-   "E20": 40937,
-   "E60": 41541,
-   "ATR": 572,
-   "BBU": 42053,
-   "BBL": 39299
+   "E20": 40966,
+   "E60": 41531,
+   "ATR": 555,
+   "BBU": 42083,
+   "BBL": 39415
   }
  },
  "d2": {
