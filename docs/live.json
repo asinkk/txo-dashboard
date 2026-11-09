@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-09 17:34",
- "prev_generated": "2026-11-09 17:04",
+ "generated": "2026-11-09 18:04",
+ "prev_generated": "2026-11-09 17:34",
  "gap": [],
- "last_price": 40953.0,
+ "last_price": 41111.0,
  "history_last": "2026-11-07 04:59",
- "live_minutes_added": 455,
+ "live_minutes_added": 485,
  "live": {
   "日盤": {
    "symbol": "TXFK6-F",
@@ -18,16 +18,16 @@
   "夜盤": {
    "symbol": "TXFK6-M",
    "name": "臺指期116",
-   "last": 40953.0,
+   "last": 41111.0,
    "ref": 41478.0,
    "date": "20261109",
-   "last_minute": "2026-11-09 17:34",
-   "minutes": 155
+   "last_minute": "2026-11-09 18:04",
+   "minutes": 185
   }
  },
  "v3": {
-  "bar": "2026-11-09 17:00",
-  "bar_end": "18:00",
+  "bar": "2026-11-09 18:00",
+  "bar_end": "19:00",
   "forming": true,
   "pos": null,
   "sig": null,
@@ -37,46 +37,46 @@
      {
       "name": "可進場時段",
       "ok": false,
-      "detail": "17:00 這根"
+      "detail": "18:00 這根"
      },
      {
       "name": "趨勢 EMA20 > EMA60",
       "ok": false,
-      "detail": "40,932 / 41,481"
+      "detail": "40,959 / 41,473"
      }
     ],
     "突破": [
      {
       "name": "紅K 實體 ≥ 高低差一半",
-      "ok": false,
-      "detail": "實體 -92、高低差 313"
+      "ok": true,
+      "detail": "實體 +36、高低差 52"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 456 點"
+      "detail": "需 442 點"
      },
      {
       "name": "收盤站上布林上軌",
       "ok": false,
-      "detail": "上軌 42,030"
+      "detail": "上軌 42,058"
      },
      {
       "name": "MACD 柱翻正",
       "ok": true,
-      "detail": "+63.8"
+      "detail": "+50.9"
      }
     ],
     "拉回": [
      {
       "name": "紅K 實體 ≥ 高低差一半",
-      "ok": false,
+      "ok": true,
       "detail": ""
      },
      {
       "name": "低點碰到 EMA20",
-      "ok": true,
-      "detail": "EMA20 40,932"
+      "ok": false,
+      "detail": "EMA20 40,959"
      },
      {
       "name": "收盤站回 EMA20",
@@ -86,18 +86,18 @@
      {
       "name": "收盤過前一根高點",
       "ok": false,
-      "detail": "41,145"
+      "detail": "41,172"
      },
      {
       "name": "EMA60 比 5 根前高",
       "ok": false,
-      "detail": "-53"
+      "detail": "-72"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 40677.35826883468,
-     "raw": 159.12834623306117
+     "stop": 40852.858188407714,
+     "raw": 100.62836231845722
     }
    },
    "空": {
@@ -105,34 +105,34 @@
      {
       "name": "可進場時段",
       "ok": false,
-      "detail": "17:00 這根"
+      "detail": "18:00 這根"
      },
      {
       "name": "趨勢 EMA20 < EMA60",
       "ok": true,
-      "detail": "40,932 / 41,481"
+      "detail": "40,959 / 41,473"
      }
     ],
     "突破": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
       "ok": false,
-      "detail": "實體 -92、高低差 313"
+      "detail": "實體 +36、高低差 52"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 456 點"
+      "detail": "需 442 點"
      },
      {
       "name": "收盤跌破布林下軌",
       "ok": false,
-      "detail": "下軌 39,639"
+      "detail": "下軌 39,704"
      },
      {
       "name": "MACD 柱翻負",
       "ok": false,
-      "detail": "+63.8"
+      "detail": "+50.9"
      }
     ],
     "拉回": [
@@ -144,7 +144,7 @@
      {
       "name": "高點碰到 EMA20",
       "ok": true,
-      "detail": "EMA20 40,932"
+      "detail": "EMA20 40,959"
      },
      {
       "name": "收盤壓回 EMA20",
@@ -154,18 +154,18 @@
      {
       "name": "收盤破前一根低點",
       "ok": false,
-      "detail": "40,733"
+      "detail": "40,849"
      },
      {
       "name": "EMA60 比 5 根前低",
       "ok": true,
-      "detail": "-53"
+      "detail": "-72"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 41228.64173116532,
-     "raw": 264.12834623306117
+     "stop": 41369.141811592286,
+     "raw": 54.62836231845722
     }
    }
   },
@@ -314,11 +314,11 @@
   },
   "events": [],
   "levels": {
-   "E20": 40932,
-   "E60": 41481,
-   "ATR": 551,
-   "BBU": 42030,
-   "BBL": 39639
+   "E20": 40959,
+   "E60": 41473,
+   "ATR": 516,
+   "BBU": 42058,
+   "BBL": 39704
   }
  },
  "d2": {
