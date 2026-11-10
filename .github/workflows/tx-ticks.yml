@@ -29,15 +29,15 @@ jobs:
         run: python strategy/fetch_twii.py history/twii_60min.csv || echo "Yahoo 抓取失敗，略過"
       - name: v3 前測（模擬交易紀錄與網頁）
         run: cd strategy && python forward.py ../history/tx_1min ../docs/strategy.html ../history/forward_trades.csv
-      - name: 更新台指期每日行情（D2 日K 只用日盤列，夜盤列一併存著）
+      - name: 更新台指期每日行情（日K 研究用，即時訊號頁已不用）
         run: python strategy/fetch_tx_daily.py history/tx_daily.csv || echo "期交所每日行情抓取失敗，略過"
-      - name: v3 與 D2 即時訊號頁、D2 交易紀錄
-        run: python strategy/live.py --out docs --record history/forward_d2_trades.csv
+      - name: v3（限時段／不限時段）即時訊號頁與成交紀錄
+        run: python strategy/live.py --out docs
       - name: 存回 repo
         run: |
           git config user.name "txo-bot"
           git config user.email "txo-bot@users.noreply.github.com"
-          git add history/tx_1min history/tx_daily.csv history/twii_60min.csv history/forward_trades.csv history/forward_d2_trades.csv docs/strategy.html docs/live.html docs/live.json docs/trades.html
+          git add history/tx_1min history/tx_daily.csv history/twii_60min.csv history/forward_trades.csv docs/strategy.html docs/live.html docs/live.json docs/trades.html
           git diff --cached --quiet && exit 0
           git commit -m "累積台指期 1 分K $(TZ=Asia/Taipei date '+%F')"
           for i in 1 2 3 4 5; do
