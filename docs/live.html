@@ -10,7 +10,8 @@
   --up:#ef7a63; --dn:#5cc296; --accent:#7ea2ff; --warn:#f0b35a; --warnbg:#3a2c14; --sigbg:#1e2a48; color-scheme:dark; } }
 * { box-sizing:border-box; }
 body { margin:0; background:var(--bg); color:var(--fg); font-family:var(--font); font-size:15px; line-height:1.5; }
-main { max-width:720px; margin:0 auto; padding:16px; }
+main { max-width:1180px; margin:0 auto; padding:16px; }
+.cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,500px),1fr)); gap:0 12px; align-items:start; }
 h1 { font-size:20px; margin:0; } h2 { font-size:17px; margin:0; } h3 { font-size:13px; color:var(--muted); font-weight:500; margin:14px 0 4px; }
 .sub, .note, .asof { color:var(--muted); font-size:12.5px; margin:4px 0; }
 .top { display:flex; justify-content:space-between; align-items:flex-end; gap:8px; flex-wrap:wrap; }
@@ -47,50 +48,54 @@ a { color:var(--accent); }
 footer { margin:20px 0 40px; }
 </style></head><body><main>
 <div class="top"><div><h1>台指策略即時訊號</h1>
-<p class="asof">日盤交易中・網頁產生於台北 2026-11-10 09:48（<span id="age">—</span>）</p></div>
-<div style="text-align:right"><p class="price">42,865</p><p class="asof">台指期近月（日盤＋夜盤）・資料到 日盤 11-10 09:48・夜盤 11-10 04:59</p></div></div>
+<p class="asof">日盤交易中・網頁產生於台北 2026-11-10 09:50（<span id="age">—</span>）</p></div>
+<div style="text-align:right"><p class="price">42,847</p><p class="asof">台指期近月（日盤＋夜盤）・資料到 日盤 11-10 09:50・夜盤 11-10 04:59</p></div></div>
 <p class="alert" id="stale" hidden></p>
 
+<div class="cols">
 <section class="card">
-<div class="ch"><div><h2>v3・60 分K</h2><p class="sub">60 分K 收完才看訊號；日盤 08:45–11:45、夜盤 22:00–00:00 開始的 K 才開新倉</p></div><span class="state flat">空手</span></div>
+<div class="ch"><div><h2>v3・60 分K（限時段）</h2><p class="sub">60 分K 收完才看訊號；日盤 08:45–11:45、夜盤 22:00–00:00 開始的 K 才開新倉</p></div><span class="state flat">空手</span></div>
 <p class="sub">最後一根 60 分K：11-10 09:45 起，形成中（10:45 收）</p>
 
-<p class="lv">EMA20 41,965・EMA60 41,742・布林 40,564–43,243・ATR 456</p>
-<h3>進場條件（看最後一根 K，以現價計）</h3><details class="side"><summary>做多 <span class="pill ">未成立</span></summary><ul class="ck"><li class="ok"><span class="mk">✓</span><span>可進場時段</span><span class="dt">09:45 這根</span></li><li class="ok"><span class="mk">✓</span><span>趨勢 EMA20 &gt; EMA60</span><span class="dt">41,965 / 41,742</span></li></ul><p class="gt">突破進場</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt">實體 -196、高低差 299</span></li><li class="no"><span class="mk">✗</span><span>實體 ≥ 0.8 ATR</span><span class="dt">需 374 點</span></li><li class="no"><span class="mk">✗</span><span>收盤站上布林上軌</span><span class="dt">上軌 43,243</span></li><li class="ok"><span class="mk">✓</span><span>MACD 柱翻正</span><span class="dt">+112.8</span></li></ul><p class="gt">拉回進場</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>低點碰到 EMA20</span><span class="dt">EMA20 41,965</span></li><li class="ok"><span class="mk">✓</span><span>收盤站回 EMA20</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>收盤過前一根高點</span><span class="dt">43,108</span></li><li class="ok"><span class="mk">✓</span><span>EMA60 比 5 根前高</span><span class="dt">+169</span></li></ul><p class="note">若現在進場，停損約 42,637（115 點前的端點，最多 1–1.5 ATR）</p></details><details class="side"><summary>做空 <span class="pill ">未成立</span></summary><ul class="ck"><li class="ok"><span class="mk">✓</span><span>可進場時段</span><span class="dt">09:45 這根</span></li><li class="no"><span class="mk">✗</span><span>趨勢 EMA20 &lt; EMA60</span><span class="dt">41,965 / 41,742</span></li></ul><p class="gt">突破進場</p><ul class="ck"><li class="ok"><span class="mk">✓</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt">實體 -196、高低差 299</span></li><li class="no"><span class="mk">✗</span><span>實體 ≥ 0.8 ATR</span><span class="dt">需 374 點</span></li><li class="no"><span class="mk">✗</span><span>收盤跌破布林下軌</span><span class="dt">下軌 40,564</span></li><li class="no"><span class="mk">✗</span><span>MACD 柱翻負</span><span class="dt">+112.8</span></li></ul><p class="gt">拉回進場</p><ul class="ck"><li class="ok"><span class="mk">✓</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt"></span></li><li class="ok"><span class="mk">✓</span><span>高點碰到 EMA20</span><span class="dt">EMA20 41,965</span></li><li class="no"><span class="mk">✗</span><span>收盤壓回 EMA20</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>收盤破前一根低點</span><span class="dt">42,172</span></li><li class="no"><span class="mk">✗</span><span>EMA60 比 5 根前低</span><span class="dt">+169</span></li></ul><p class="note">若現在進場，停損約 43,141（276 點前的端點，最多 1–1.5 ATR）</p></details>
+<p class="lv">EMA20 41,963・EMA60 41,741・布林 40,565–43,239・ATR 459</p>
+<h3>進場條件（看最後一根 K，以現價計）</h3><details class="side"><summary>做多 <span class="pill ">未成立</span></summary><ul class="ck"><li class="ok"><span class="mk">✓</span><span>可進場時段</span><span class="dt">09:45 這根</span></li><li class="ok"><span class="mk">✓</span><span>趨勢 EMA20 &gt; EMA60</span><span class="dt">41,963 / 41,741</span></li></ul><p class="gt">突破進場</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt">實體 -214、高低差 337</span></li><li class="no"><span class="mk">✗</span><span>實體 ≥ 0.8 ATR</span><span class="dt">需 374 點</span></li><li class="no"><span class="mk">✗</span><span>收盤站上布林上軌</span><span class="dt">上軌 43,239</span></li><li class="ok"><span class="mk">✓</span><span>MACD 柱翻正</span><span class="dt">+111.6</span></li></ul><p class="gt">拉回進場</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>低點碰到 EMA20</span><span class="dt">EMA20 41,963</span></li><li class="ok"><span class="mk">✓</span><span>收盤站回 EMA20</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>收盤過前一根高點</span><span class="dt">43,108</span></li><li class="ok"><span class="mk">✓</span><span>EMA60 比 5 根前高</span><span class="dt">+168</span></li></ul><p class="note">若現在進場，停損約 42,618（135 點前的端點，最多 1–1.5 ATR）</p></details><details class="side"><summary>做空 <span class="pill ">未成立</span></summary><ul class="ck"><li class="ok"><span class="mk">✓</span><span>可進場時段</span><span class="dt">09:45 這根</span></li><li class="no"><span class="mk">✗</span><span>趨勢 EMA20 &lt; EMA60</span><span class="dt">41,963 / 41,741</span></li></ul><p class="gt">突破進場</p><ul class="ck"><li class="ok"><span class="mk">✓</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt">實體 -214、高低差 337</span></li><li class="no"><span class="mk">✗</span><span>實體 ≥ 0.8 ATR</span><span class="dt">需 374 點</span></li><li class="no"><span class="mk">✗</span><span>收盤跌破布林下軌</span><span class="dt">下軌 40,565</span></li><li class="no"><span class="mk">✗</span><span>MACD 柱翻負</span><span class="dt">+111.6</span></li></ul><p class="gt">拉回進場</p><ul class="ck"><li class="ok"><span class="mk">✓</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt"></span></li><li class="ok"><span class="mk">✓</span><span>高點碰到 EMA20</span><span class="dt">EMA20 41,963</span></li><li class="no"><span class="mk">✗</span><span>收盤壓回 EMA20</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>收盤破前一根低點</span><span class="dt">42,172</span></li><li class="no"><span class="mk">✗</span><span>EMA60 比 5 根前低</span><span class="dt">+168</span></li></ul><p class="note">若現在進場，停損約 43,141（294 點前的端點，最多 1–1.5 ATR）</p></details>
 </section>
 <section class="card">
-<div class="ch"><div><h2>D2・日K</h2><p class="sub">收盤創 20 日新高/新低，13:45 收盤前進場；台指期日K 只算日盤（08:45–13:45），夜盤不算</p></div><span class="state flat">空手</span></div>
-<p class="sub">最後一根日K（只算日盤）：11-10，形成中（13:45 收）</p>
+<div class="ch"><div><h2>v3 不限時段・60 分K</h2><p class="sub">規則跟 v3 一樣，但日盤、夜盤任何一根 60 分K 收完都可以開新倉</p></div><span class="state flat">空手</span></div>
+<p class="sub">最後一根 60 分K：11-10 09:45 起，形成中（10:45 收）</p>
 
-<p class="lv">日EMA20 44,793・EMA60 45,899・日ATR 1,406・最後日K 開42,701 高43,108 低42,172 收42,865</p>
-<h3>進場條件（看最後一根 K，以現價計）</h3><details class="side"><summary>做多 <span class="pill ">未成立</span></summary><ul class="ck"><li class="no"><span class="mk">✗</span><span>趨勢 日EMA20 &gt; EMA60</span><span class="dt">44,793 / 45,899</span></li></ul><p class="gt">進場條件</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>收盤創 20 日新高</span><span class="dt">需高於 49,504</span></li><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt">開 42,701、實體 +164、高低差 936</span></li><li class="ok"><span class="mk">✓</span><span>停損距離 ≤ 1.5 ATR（不追太遠）</span><span class="dt">834 點 / 上限 2,110</span></li></ul><p class="note">若現在進場，停損約 42,031（834 點前的端點，最多 1–1.5 ATR）</p></details><details class="side"><summary>做空 <span class="pill ">未成立</span></summary><ul class="ck"><li class="ok"><span class="mk">✓</span><span>趨勢 日EMA20 &lt; EMA60</span><span class="dt">44,793 / 45,899</span></li></ul><p class="gt">進場條件</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>收盤創 20 日新低</span><span class="dt">需低於 39,786</span></li><li class="no"><span class="mk">✗</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt">開 42,701、實體 +164、高低差 936</span></li><li class="ok"><span class="mk">✓</span><span>停損距離 ≤ 1.5 ATR（不追太遠）</span><span class="dt">384 點 / 上限 2,110</span></li></ul><p class="note">若現在進場，停損約 43,568（384 點前的端點，最多 1–1.5 ATR）</p></details>
+<p class="lv">EMA20 41,963・EMA60 41,741・布林 40,565–43,239・ATR 459</p>
+<h3>進場條件（看最後一根 K，以現價計）</h3><details class="side"><summary>做多 <span class="pill ">未成立</span></summary><ul class="ck"><li class="ok"><span class="mk">✓</span><span>趨勢 EMA20 &gt; EMA60</span><span class="dt">41,963 / 41,741</span></li></ul><p class="gt">突破進場</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt">實體 -214、高低差 337</span></li><li class="no"><span class="mk">✗</span><span>實體 ≥ 0.8 ATR</span><span class="dt">需 374 點</span></li><li class="no"><span class="mk">✗</span><span>收盤站上布林上軌</span><span class="dt">上軌 43,239</span></li><li class="ok"><span class="mk">✓</span><span>MACD 柱翻正</span><span class="dt">+111.6</span></li></ul><p class="gt">拉回進場</p><ul class="ck"><li class="no"><span class="mk">✗</span><span>紅K 實體 ≥ 高低差一半</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>低點碰到 EMA20</span><span class="dt">EMA20 41,963</span></li><li class="ok"><span class="mk">✓</span><span>收盤站回 EMA20</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>收盤過前一根高點</span><span class="dt">43,108</span></li><li class="ok"><span class="mk">✓</span><span>EMA60 比 5 根前高</span><span class="dt">+168</span></li></ul><p class="note">若現在進場，停損約 42,618（135 點前的端點，最多 1–1.5 ATR）</p></details><details class="side"><summary>做空 <span class="pill ">未成立</span></summary><ul class="ck"><li class="no"><span class="mk">✗</span><span>趨勢 EMA20 &lt; EMA60</span><span class="dt">41,963 / 41,741</span></li></ul><p class="gt">突破進場</p><ul class="ck"><li class="ok"><span class="mk">✓</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt">實體 -214、高低差 337</span></li><li class="no"><span class="mk">✗</span><span>實體 ≥ 0.8 ATR</span><span class="dt">需 374 點</span></li><li class="no"><span class="mk">✗</span><span>收盤跌破布林下軌</span><span class="dt">下軌 40,565</span></li><li class="no"><span class="mk">✗</span><span>MACD 柱翻負</span><span class="dt">+111.6</span></li></ul><p class="gt">拉回進場</p><ul class="ck"><li class="ok"><span class="mk">✓</span><span>黑K 實體 ≥ 高低差一半</span><span class="dt"></span></li><li class="ok"><span class="mk">✓</span><span>高點碰到 EMA20</span><span class="dt">EMA20 41,963</span></li><li class="no"><span class="mk">✗</span><span>收盤壓回 EMA20</span><span class="dt"></span></li><li class="no"><span class="mk">✗</span><span>收盤破前一根低點</span><span class="dt">42,172</span></li><li class="no"><span class="mk">✗</span><span>EMA60 比 5 根前低</span><span class="dt">+168</span></li></ul><p class="note">若現在進場，停損約 43,141（294 點前的端點，最多 1–1.5 ATR）</p></details>
 </section>
-<section class="card"><h2>v3 模擬交易紀錄</h2>
+</div>
+<div class="cols">
+<section class="card"><h2>v3（限時段）模擬交易紀錄</h2>
 <p class="sub">前測（2026/11/09 起）已出場 0 筆、賺 0 筆、合計 +0.0R、<span class="">+0</span> 元（含未實現）</p>
 <p class="note">還沒有交易。</p>
 <p class="sub">前測開始前（台指期累積資料回測）：7 筆 +10.0R、<span class="up">+36,987</span> 元・<a href="trades.html">完整歷史成交紀錄 →</a></p>
 </section>
-<section class="card"><h2>D2 模擬交易紀錄</h2>
+<section class="card"><h2>v3 不限時段 模擬交易紀錄</h2>
 <p class="sub">前測（2026/11/09 起）已出場 0 筆、賺 0 筆、合計 +0.0R、<span class="">+0</span> 元（含未實現）</p>
 <p class="note">還沒有交易。</p>
-<p class="sub">前測開始前（台指期累積資料回測）：2 筆 -0.1R、<span class="dn">-860</span> 元・<a href="trades.html">完整歷史成交紀錄 →</a></p>
+<p class="sub">前測開始前（台指期累積資料回測）：15 筆 +4.9R、<span class="up">+23,367</span> 元・<a href="trades.html">完整歷史成交紀錄 →</a></p>
 </section>
+</div>
 <footer>
-<p class="note">GitHub Actions 在交易時段大約每 30 分鐘更新一次：日盤台北 08:48–13:48（:18、:48，另加 13:35 給 D2 收盤前看），
+<p class="note">GitHub Actions 在交易時段大約每 30 分鐘更新一次：日盤台北 08:48–13:48（:18、:48），
 夜盤 15:04–05:04（:04、:34）。GitHub 的排程是盡力而為，常晚 5–30 分鐘，偶爾會漏跑，所以請看上面的「資料到」時間，不要拿這頁當下單依據。
 每次更新都從期交所重新抓整個日盤、夜盤的 1 分K，從頭重算 K 棒、部位與停損，所以中間漏跑幾次不會漏掉 K 棒，也不會漏掉停損；
 晚到的進出場會在卡片上標「上次更新之後」並寫晚了幾分鐘。每天 06:30 的存檔若漏跑，下一次更新發現缺盤會自動去期交所補抓。</p>
-<p class="note">「形成中」表示那根 K 還沒收完，條件是用現價先算，收K前都可能變。v3 的訊號要等 60 分K 收完、下一根開盤才進場；D2 是日K 收盤前進場。
+<p class="note">「形成中」表示那根 K 還沒收完，條件是用現價先算，收K前都可能變。兩個版本的訊號都要等 60 分K 收完、下一根開盤才進場；兩版各自獨立計算，同一時間可能一邊持倉、一邊空手。
 試算：本金 20 萬、1 口微台（每點 10 元）、每次下單 25 元；R 是以初始停損點數為 1 的倍數。</p>
-<p class="note"><b>資料：兩套策略的訊號、部位、停損都只用台指期近月（TX）；v3 含夜盤，D2 日K 只算日盤</b>：期交所每筆成交轉 1 分K（history 到 2026-11-10 04:59）＋期交所即時 1 分K＋期交所每日行情（D2 日K 指標用，2024 年起）。
-加權指數只是歷史成交紀錄頁裡的回測資料，不用在這頁。規則：<code>strategy/v3.py</code> 的 V3、<code>strategy/daily.py</code> 的 D2。
+<p class="note"><b>資料：訊號、部位、停損都只用台指期近月（TX）日盤＋夜盤 60 分K</b>：期交所每筆成交轉 1 分K（history 到 2026-11-10 04:59）＋期交所即時 1 分K。
+加權指數只是歷史成交紀錄頁裡的回測資料，不用在這頁。規則：<code>strategy/v3.py</code> 的 V3；限時段用 <code>backtest.tx_revised</code>，不限時段版不套時段濾網。
 <a href="trades.html">歷史成交紀錄</a>・<a href="strategy.html">v3 前測（每日）</a>・<a href="index.html">選擇權盤面</a></p>
 </footer>
 </main>
 <script>
 (function () {
   // 用看網頁的人的時鐘算這頁多久沒更新；交易時段超過 45 分鐘就提醒（GitHub 排程延遲或漏跑）
-  var gen = new Date("2026-11-10T09:48:00+08:00"), now = new Date();
+  var gen = new Date("2026-11-10T09:50:00+08:00"), now = new Date();
   var m = Math.round((now - gen) / 60000);
   var age = document.getElementById("age");
   if (age) age.textContent = m < 1 ? "剛剛" : m < 120 ? m + " 分鐘前" : Math.round(m / 60) + " 小時前";
