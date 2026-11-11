@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-12 01:34",
- "prev_generated": "2026-11-12 01:04",
+ "generated": "2026-11-12 02:04",
+ "prev_generated": "2026-11-12 01:34",
  "gap": [],
- "last_price": 44873.0,
+ "last_price": 44731.0,
  "history_last": "2026-11-11 04:59",
- "live_minutes_added": 935,
+ "live_minutes_added": 965,
  "live": {
   "日盤": {
    "symbol": "TXFK6-F",
@@ -18,16 +18,16 @@
   "夜盤": {
    "symbol": "TXFK6-M",
    "name": "臺指期116",
-   "last": 44873.0,
+   "last": 44731.0,
    "ref": 44136.0,
    "date": "20261111",
-   "last_minute": "2026-11-12 01:34",
-   "minutes": 635
+   "last_minute": "2026-11-12 02:04",
+   "minutes": 665
   }
  },
  "v3": {
-  "bar": "2026-11-12 01:00",
-  "bar_end": "02:00",
+  "bar": "2026-11-12 02:00",
+  "bar_end": "03:00",
   "forming": true,
   "pos": {
    "side": "多",
@@ -38,11 +38,11 @@
    "stop": 43652,
    "be": true,
    "R": 648,
-   "pts": 1224,
-   "twd": 12215,
-   "to_stop": 1221,
+   "pts": 1082,
+   "twd": 10795,
+   "to_stop": 1079,
    "be_at": 44297,
-   "trail_note": "保本後停損改成「進場後最高收盤 − 5 ATR」，只往有利方向移動；目前 ATR 339"
+   "trail_note": "保本後停損改成「進場後最高收盤 − 5 ATR」，只往有利方向移動；目前 ATR 321"
   },
   "sig": null,
   "checks": {
@@ -51,34 +51,34 @@
      {
       "name": "可進場時段",
       "ok": false,
-      "detail": "01:00 這根"
+      "detail": "02:00 這根"
      },
      {
       "name": "趨勢 EMA20 > EMA60",
       "ok": true,
-      "detail": "44,030 / 42,996"
+      "detail": "44,091 / 43,050"
      }
     ],
     "突破": [
      {
       "name": "紅K 實體 ≥ 高低差一半",
       "ok": false,
-      "detail": "實體 -2、高低差 120"
+      "detail": "實體 -72、高低差 85"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 285 點"
+      "detail": "需 271 點"
      },
      {
       "name": "收盤站上布林上軌",
       "ok": false,
-      "detail": "上軌 45,558"
+      "detail": "上軌 45,550"
      },
      {
       "name": "MACD 柱翻正",
       "ok": true,
-      "detail": "+33.5"
+      "detail": "+9.5"
      }
     ],
     "拉回": [
@@ -90,7 +90,7 @@
      {
       "name": "低點碰到 EMA20",
       "ok": false,
-      "detail": "EMA20 44,030"
+      "detail": "EMA20 44,091"
      },
      {
       "name": "收盤站回 EMA20",
@@ -100,18 +100,18 @@
      {
       "name": "收盤過前一根高點",
       "ok": false,
-      "detail": "44,911"
+      "detail": "44,895"
      },
      {
       "name": "EMA60 比 5 根前高",
       "ok": true,
-      "detail": "+308"
+      "detail": "+302"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 44703.375802675684,
-     "raw": 131.92483946486027
+     "stop": 44570.45610248457,
+     "raw": 38.1087795030835
     }
    },
    "空": {
@@ -119,46 +119,46 @@
      {
       "name": "可進場時段",
       "ok": false,
-      "detail": "01:00 這根"
+      "detail": "02:00 這根"
      },
      {
       "name": "趨勢 EMA20 < EMA60",
       "ok": false,
-      "detail": "44,030 / 42,996"
+      "detail": "44,091 / 43,050"
      }
     ],
     "突破": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
-      "ok": false,
-      "detail": "實體 -2、高低差 120"
+      "ok": true,
+      "detail": "實體 -72、高低差 85"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 285 點"
+      "detail": "需 271 點"
      },
      {
       "name": "收盤跌破布林下軌",
       "ok": false,
-      "detail": "下軌 42,256"
+      "detail": "下軌 42,489"
      },
      {
       "name": "MACD 柱翻負",
       "ok": false,
-      "detail": "+33.5"
+      "detail": "+9.5"
      }
     ],
     "拉回": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
-      "ok": false,
+      "ok": true,
       "detail": ""
      },
      {
       "name": "高點碰到 EMA20",
       "ok": true,
-      "detail": "EMA20 44,030"
+      "detail": "EMA20 44,091"
      },
      {
       "name": "收盤壓回 EMA20",
@@ -167,19 +167,19 @@
      },
      {
       "name": "收盤破前一根低點",
-      "ok": false,
-      "detail": "44,650"
+      "ok": true,
+      "detail": "44,775"
      },
      {
       "name": "EMA60 比 5 根前低",
       "ok": false,
-      "detail": "+308"
+      "detail": "+302"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 45042.624197324316,
-     "raw": 55.92483946486027
+     "stop": 44891.54389751543,
+     "raw": 111.1087795030835
     }
    }
   },
@@ -195,9 +195,9 @@
      "stop": 43652,
      "exit_t": "",
      "exit": "",
-     "r": 1.88,
-     "pts": 1224,
-     "twd": 12215,
+     "r": 1.66,
+     "pts": 1082,
+     "twd": 10795,
      "open": true,
      "be": true,
      "why": "",
@@ -336,7 +336,7 @@
     "n": 0,
     "win": 0,
     "R": 0,
-    "twd": 12215
+    "twd": 10795
    },
    "bsum": {
     "n": 7,
@@ -347,16 +347,16 @@
   },
   "events": [],
   "levels": {
-   "E20": 44030,
-   "E60": 42996,
-   "ATR": 339,
-   "BBU": 45558,
-   "BBL": 42256
+   "E20": 44091,
+   "E60": 43050,
+   "ATR": 321,
+   "BBU": 45550,
+   "BBL": 42489
   }
  },
  "v3all": {
-  "bar": "2026-11-12 01:00",
-  "bar_end": "02:00",
+  "bar": "2026-11-12 02:00",
+  "bar_end": "03:00",
   "forming": true,
   "pos": {
    "side": "多",
@@ -367,11 +367,11 @@
    "stop": 43652,
    "be": true,
    "R": 648,
-   "pts": 1224,
-   "twd": 12215,
-   "to_stop": 1221,
+   "pts": 1082,
+   "twd": 10795,
+   "to_stop": 1079,
    "be_at": 44297,
-   "trail_note": "保本後停損改成「進場後最高收盤 − 5 ATR」，只往有利方向移動；目前 ATR 339"
+   "trail_note": "保本後停損改成「進場後最高收盤 − 5 ATR」，只往有利方向移動；目前 ATR 321"
   },
   "sig": null,
   "checks": {
@@ -380,29 +380,29 @@
      {
       "name": "趨勢 EMA20 > EMA60",
       "ok": true,
-      "detail": "44,030 / 42,996"
+      "detail": "44,091 / 43,050"
      }
     ],
     "突破": [
      {
       "name": "紅K 實體 ≥ 高低差一半",
       "ok": false,
-      "detail": "實體 -2、高低差 120"
+      "detail": "實體 -72、高低差 85"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 285 點"
+      "detail": "需 271 點"
      },
      {
       "name": "收盤站上布林上軌",
       "ok": false,
-      "detail": "上軌 45,558"
+      "detail": "上軌 45,550"
      },
      {
       "name": "MACD 柱翻正",
       "ok": true,
-      "detail": "+33.5"
+      "detail": "+9.5"
      }
     ],
     "拉回": [
@@ -414,7 +414,7 @@
      {
       "name": "低點碰到 EMA20",
       "ok": false,
-      "detail": "EMA20 44,030"
+      "detail": "EMA20 44,091"
      },
      {
       "name": "收盤站回 EMA20",
@@ -424,18 +424,18 @@
      {
       "name": "收盤過前一根高點",
       "ok": false,
-      "detail": "44,911"
+      "detail": "44,895"
      },
      {
       "name": "EMA60 比 5 根前高",
       "ok": true,
-      "detail": "+308"
+      "detail": "+302"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 44703.375802675684,
-     "raw": 131.92483946486027
+     "stop": 44570.45610248457,
+     "raw": 38.1087795030835
     }
    },
    "空": {
@@ -443,41 +443,41 @@
      {
       "name": "趨勢 EMA20 < EMA60",
       "ok": false,
-      "detail": "44,030 / 42,996"
+      "detail": "44,091 / 43,050"
      }
     ],
     "突破": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
-      "ok": false,
-      "detail": "實體 -2、高低差 120"
+      "ok": true,
+      "detail": "實體 -72、高低差 85"
      },
      {
       "name": "實體 ≥ 0.8 ATR",
       "ok": false,
-      "detail": "需 285 點"
+      "detail": "需 271 點"
      },
      {
       "name": "收盤跌破布林下軌",
       "ok": false,
-      "detail": "下軌 42,256"
+      "detail": "下軌 42,489"
      },
      {
       "name": "MACD 柱翻負",
       "ok": false,
-      "detail": "+33.5"
+      "detail": "+9.5"
      }
     ],
     "拉回": [
      {
       "name": "黑K 實體 ≥ 高低差一半",
-      "ok": false,
+      "ok": true,
       "detail": ""
      },
      {
       "name": "高點碰到 EMA20",
       "ok": true,
-      "detail": "EMA20 44,030"
+      "detail": "EMA20 44,091"
      },
      {
       "name": "收盤壓回 EMA20",
@@ -486,19 +486,19 @@
      },
      {
       "name": "收盤破前一根低點",
-      "ok": false,
-      "detail": "44,650"
+      "ok": true,
+      "detail": "44,775"
      },
      {
       "name": "EMA60 比 5 根前低",
       "ok": false,
-      "detail": "+308"
+      "detail": "+302"
      }
     ],
     "stop": {
      "ok": true,
-     "stop": 45042.624197324316,
-     "raw": 55.92483946486027
+     "stop": 44891.54389751543,
+     "raw": 111.1087795030835
     }
    }
   },
@@ -514,9 +514,9 @@
      "stop": 43652,
      "exit_t": "",
      "exit": "",
-     "r": 1.88,
-     "pts": 1224,
-     "twd": 12215,
+     "r": 1.66,
+     "pts": 1082,
+     "twd": 10795,
      "open": true,
      "be": true,
      "why": "",
@@ -799,7 +799,7 @@
     "n": 0,
     "win": 0,
     "R": 0,
-    "twd": 12215
+    "twd": 10795
    },
    "bsum": {
     "n": 15,
@@ -810,11 +810,11 @@
   },
   "events": [],
   "levels": {
-   "E20": 44030,
-   "E60": 42996,
-   "ATR": 339,
-   "BBU": 45558,
-   "BBL": 42256
+   "E20": 44091,
+   "E60": 43050,
+   "ATR": 321,
+   "BBU": 45550,
+   "BBL": 42489
   }
  }
 }
