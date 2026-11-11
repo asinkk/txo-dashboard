@@ -61,8 +61,11 @@ def main():
             json.dump(data, f, ensure_ascii=False)
     s = data["summary"][0]
     print(f"已輸出 {a.out}")
-    print(f"{s['label']}：合成期貨 {s['forward']:,.0f}，預期波動 ±{s['straddle']:,.0f}（{s['range_low']:,}–{s['range_high']:,}），"
-          f"ATM IV {s['atm_iv']:.1%}，P/C(OI) {s['pc_oi']}，最大痛點 {s['max_pain']:,}")
+    # 開盤前後或期交所資料還沒出時，有些欄位會是 None；這行只是紀錄，不能讓它中斷存檔
+    f_ = lambda v, spec: "—" if v is None else format(v, spec)
+    print(f"{s['label']}：合成期貨 {f_(s['forward'], ',.0f')}，預期波動 ±{f_(s['straddle'], ',.0f')}"
+          f"（{f_(s['range_low'], ',')}–{f_(s['range_high'], ',')}），"
+          f"ATM IV {f_(s['atm_iv'], '.1%')}，P/C(OI) {f_(s['pc_oi'], '')}，最大痛點 {f_(s['max_pain'], ',')}")
     if FROZEN and not a.no_open:
         import webbrowser
         webbrowser.open("file:///" + os.path.abspath(a.out).replace(os.sep, "/"))

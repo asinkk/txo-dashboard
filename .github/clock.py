@@ -3,8 +3,8 @@
 
 - 時間表直接讀那三個 workflow 的 cron（UTC），不用另外維護一份。
 - 一次最多跑約 5 小時 45 分（job 上限 6 小時），到時候觸發下一棒自己再結束。
-- 下一個排程時間在 90 分鐘以後（例如 06:30 存完 1 分K 到 08:48 開盤前）就先結束，
-  由 clock.yml 自己的排程在開盤前再叫起來。
+- 下一個排程時間在 150 分鐘以後（週六 06:30 之後到週一開盤）才結束，由 clock.yml 自己的排程再叫起來。
+  平日 06:30 → 08:48 的 138 分鐘空檔不結束，因為 GitHub 的 08:40 排程常晚到（11/10 晚 18 分、11/11 晚 77 分）。
 - 同時只留一個鬧鐘：開始時若有更早的鬧鐘還在跑，等兩分鐘（交棒用），還在就結束。
 
 測試：python .github/clock.py --dry-run --now 2026-11-09T00:40 --minutes 120
@@ -14,7 +14,7 @@ import argparse, datetime as dt, glob, json, os, re, subprocess, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 TARGETS = ["txo.yml", "strategy-live.yml", "tx-ticks.yml"]
 MAX_RUN = dt.timedelta(hours=5, minutes=45)
-IDLE_GAP = dt.timedelta(minutes=90)
+IDLE_GAP = dt.timedelta(minutes=150)
 UTC = dt.timezone.utc
 TPE = dt.timezone(dt.timedelta(hours=8))
 
