@@ -12,9 +12,8 @@
 | `simulate.py` | 固定口數試算帳戶金額（預設 20 萬、1 口微台、每次下單 25 元），含買進持有對照 |
 | `forward.py` | v3 前測：每天用累積的台指期日夜盤資料跑 v3，輸出 `docs/strategy.html` 與 `history/forward_trades.csv`（2026/11/9 起算前測） |
 | `fetch_tx_daily.py` | 期交所台指期每日行情（2024 年起，日盤與夜盤分列），存到 `history/tx_daily.csv`（日K 研究用；即時訊號頁 2026-11-10 起不再用） |
-| `live.py` | 即時訊號頁：history 加上期交所即時 1 分K（MIS getChartData1M），算 v3（60 分K，含夜盤）兩個版本：限時段（原規則）與不限時段（任何一根 60 分K 收完都可開新倉），以及同樣兩版改用 30 分K（2026-11-12 加入，參數不變）目前的部位、停損、訊號與進場條件，輸出 `docs/live.html`、`docs/live.json` |
-| `trades_page.py` | 歷史成交紀錄頁 `docs/trades.html`（台指期累積資料＋近 2 年加權指數回測，v3 限時段與不限時段每一筆，台指期另有 30 分K 兩版，時間到分鐘），由 `live.py` 產生 |
-| `compare_30m.py` | 台指期 v3 60 分K 與 30 分K（限時段／不限時段，及幾個 30 分K 參數變化）回測比較 |
+| `live.py` | 即時訊號頁：history 加上期交所即時 1 分K（MIS getChartData1M），算 v3（60 分K，含夜盤）兩個版本：限時段（原規則）與不限時段（任何一根 60 分K 收完都可開新倉）目前的部位、停損、訊號與進場條件，輸出 `docs/live.html`、`docs/live.json` |
+| `trades_page.py` | 歷史成交紀錄頁 `docs/trades.html`（台指期累積資料＋近 2 年加權指數回測，v3 限時段與不限時段每一筆，時間到分鐘），由 `live.py` 產生 |
 | `v3.py` | v3：加上拉回進場、5 ATR 移動停利、日線濾網選項，含參數搜尋 |
 | `daily.py` | 日K 版：把 60 分K 合成日K（台指期夜盤併入下一個交易日），回測 v3 條件直接搬到日K 與調整版 D1，含參數搜尋 |
 | `daily_compare.py` | D1、v3、混合版（日K 定方向 + 60 分K 進場）比較，含 20 萬元 1 口微台試算，可輸出 D1 交易紀錄 |
@@ -52,7 +51,7 @@ D2（同日第二次調整）：D1 改成訊號當天收盤前進場（加權指
 
 即時訊號頁 https://asinkk.github.io/txo-dashboard/live.html 由 `.github/workflows/strategy-live.yml` 在交易時段每半小時更新
 （日盤台北 :18/:48，夜盤 :04/:34；60 分K 收完後幾分鐘）。GitHub 排程可能晚 5–30 分鐘或漏跑，頁面上有資料時間。
-每天 06:30 的 `tx-ticks.yml` 也會跑一次。2026-11-10 起頁面不再顯示 D2 日K（`history/forward_d2_trades.csv` 停在當天），改成 v3 限時段與不限時段並列。2026-11-12 起再加 30 分K 兩版（前測從 11/12 15:00 夜盤算起）；排程時間（:18/:48、:04/:34）剛好在 30 分K 收盤後 3–4 分鐘，不用改。
+每天 06:30 的 `tx-ticks.yml` 也會跑一次。2026-11-10 起頁面不再顯示 D2 日K（`history/forward_d2_trades.csv` 停在當天），改成 v3 限時段與不限時段並列。
 
 ```
 python strategy/live.py --out docs                       # 抓即時資料

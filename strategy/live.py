@@ -1,13 +1,11 @@
-"""即時策略看板：台指期 v3 四個版本（60 分K、30 分K 各兩版）目前的訊號、部位、停損與進場條件。
+"""即時策略看板：台指期 v3（60 分K）兩個版本目前的訊號、部位、停損與進場條件。
   - v3：原規則，只在日盤 08:45–11:45、夜盤 21:00–23:00（美國冬令 22:00–00:00）開始的 60 分K 開新倉
   - v3 不限時段：規則相同，但日夜盤任何一根 60 分K 收完都可以開新倉
-  - v3・30 分K／v3 不限時段・30 分K：同一套規則與參數（指標根數不變），改用 30 分K；
-    限時段版的開倉時段跟 60 分K 一樣（落在上述 60 分K 裡的 30 分K 都可以開）
 
 資料：
   - history/tx_1min/：每天台北 06:30 存的期交所每筆成交（轉成 1 分K）
   - 期交所 MIS 即時 1 分K（getChartData1M）：補上目前或最近一個日盤、夜盤還沒存進 history 的部分
-訊號、部位、停損全部只用台指期近月的日盤＋夜盤 60 分K／30 分K。
+訊號、部位、停損全部只用台指期近月的日盤＋夜盤 60 分K。
 加權指數（history/twii_60min.csv）只用在歷史成交紀錄頁的回測，不影響這裡的訊號。
 策略規則完全沿用 v3.run（V3），這裡只負責接資料、判斷最後一根 K 是否已收完、
 把結果整理成網頁。條件明細（✓/✗）是顯示用的重算，判斷進出場以 run() 的結果為準。
@@ -18,7 +16,7 @@ import argparse, bisect, csv, datetime as dt, glob, html, json, os, shutil, sys,
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_bars import build
-from backtest import load, indicators, tx_revised, tx_revised30, us_dst, COST
+from backtest import load, indicators, tx_revised, us_dst, COST
 import v3
 import trades_page
 import collect_ticks
@@ -30,12 +28,8 @@ CAP, MULT, FEE = 200000, 10, 25                   # 本金 20 萬、1 口微台�
 # 兩個版本規則都是 v3.V3，只差「哪些時段開始的 60 分K 可以開新倉」：
 #   v3    日盤 08:45–11:45、夜盤 21:00–23:00（美國冬令 22:00–00:00）開始的 K（backtest.tx_revised）
 #   v3all 不限時段，日夜盤任何一根 60 分K 收完都可以開新倉（Monkey 2026-11-10 要求加這一版並列）
-#   v3_30 / v3all_30  同樣兩版改用 30 分K（Monkey 2026-11-12 要求加 30 分K 版本），參數不變；前測從 11/12 夜盤算起
-# (key, 開倉時段, K 棒分鐘數, 前測開始)
-FORWARD_START30 = dt.datetime(2026, 11, 12, 15, 0)
-STRATS = (("v3", tx_revised, 60, FORWARD_START), ("v3all", None, 60, FORWARD_START),
-          ("v3_30", tx_revised30, 30, FORWARD_START30), ("v3all_30", None, 30, FORWARD_START30))
-NAMES = {"v3": "v3（限時段）", "v3all": "v3 不限時段", "v3_30": "v3・30 分K（限時段）", "v3all_30": "v3 不限時段・30 分K"}
+STRATS = (("v3", tx_revised), ("v3all", None))
+NAMES = {"v3": "v3（限時段）", "v3all": "v3 不限時段"}
 
 
 def now_tpe():
@@ -207,14 +201,14 @@ def first_touch(mT, m, start, end, stop, side):
     return None
 
 
-def refine_times(trades, m, minutes=60):
-    """run() 的時間是 K 棒（60 或 30 分K）的開始時間。停損出場改成 1 分K 第一次碰到停損的那一分鐘（m 是換月調整後的 1 分K）。"""
+def refine_times(trades, m):
+    """run() 的時間是 60 分K 的開始時間。停損出場改成 1 分K 第一次碰到停損的那一分鐘（m 是換月調整後的 1 分K）。"""
     mT = [r[0] for r in m]
     for x in trades:
         x.setdefault("why", "" if x["open"] else exit_reason_v3(x))
         if x["open"]:
             continue
-        t = first_touch(mT, m, x["exit_t"], x["exit_t"] + dt.timedelta(minutes=minutes), x["stop"], x["side"])
+        t = first_touch(mT, m, x["exit_t"], x["exit_t"] + dt.timedelta(minutes=60), x["stop"], x["side"])
         if t:
             x["exit_t"] = t
     return trades
@@ -269,9 +263,8 @@ def why_text(x):
     return x.get("why", "")
 
 
-def trade_row(x, last_c=None, fwd=FORWARD_START):
-    """last_c：持倉中的交易用這個價格算未實現損益（台指期用現價；None 表示用 run() 最後一根收盤）。
-    fwd：前測開始時間（訊號 K 在這之後算「前測」）。60 分K 版沿用原本「11/9 當天 0 點起」的算法。"""
+def trade_row(x, last_c=None):
+    """last_c：持倉中的交易用這個價格算未實現損益（台指期用現價；None 表示用 run() 最後一根收盤）。"""
     if x["open"] and last_c is not None:
         pts = (last_c - x["entry"]) * x["side"]
         x = dict(x, r=(pts - COST) / x["R"])
@@ -280,7 +273,7 @@ def trade_row(x, last_c=None, fwd=FORWARD_START):
             "stop": round(x["stop"]), "exit_t": "" if x["open"] else f"{x['exit_t']:%Y-%m-%d %H:%M}",
             "exit": "" if x["open"] else round(x["exit"]), "r": round(x["r"], 2), "pts": round(x["r"] * x["R"] + COST),
             "twd": round(twd(x)), "open": x["open"], "be": x["be"], "why": why_text(x),
-            "phase": "前測" if x["t"] >= (fwd.replace(hour=0, minute=0) if fwd == FORWARD_START else fwd) else "回測"}
+            "phase": "前測" if x["t"] >= FORWARD_START.replace(hour=0, minute=0) else "回測"}
 
 
 def main():
@@ -313,24 +306,20 @@ def main():
     try:
         rows = build(tmp, verbose=False)
         m1 = build(tmp, 1, verbose=False)   # 換月調整後的 1 分K，找停損觸價時間用
-        rows30 = build(tmp, 30, verbose=False)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
-    def to_bars(rs):
-        return ([r[0] for r in rs], *([r[k] for r in rs] for k in range(1, 5)))
-    hbs = {60: to_bars(rows), 30: to_bars(rows30)}
-    T = hbs[60][0]
-    last_c = hbs[60][4][-1]
+    T = [r[0] for r in rows]
+    hb = (T, *([r[k] for r in rows] for k in range(1, 5)))
+    last_c = hb[4][-1]
 
-    # 最後一根 K 收完了沒（同分鐘數的版本用同一套 K 棒）
-    bar_end = {mn: b[0][-1] + dt.timedelta(minutes=mn) for mn, b in hbs.items()}
+    # 最後一根 60 分K 收完了沒（兩個版本用同一套 K 棒）
+    v3_end = T[-1] + dt.timedelta(minutes=60)
+    v3_forming = now < v3_end
     res = {}
-    for key, allowed, mn, fwd in STRATS:
-        hb = hbs[mn]
-        r = evaluate(hb, lambda b, ind: v3.run(b, ind, allowed, "12:45" if mn == 60 else "13:15", v3.V3), dt.timedelta(minutes=mn))
-        r["checks"] = v3_checks(hb, r["ind"], len(hb[0]) - 1, allowed)
-        refine_times(r["trades"], m1, mn)
-        r["mn"], r["fwd"] = mn, fwd
+    for key, allowed in STRATS:
+        r = evaluate(hb, lambda b, ind: v3.run(b, ind, allowed, "12:45", v3.V3), dt.timedelta(minutes=60))
+        r["checks"] = v3_checks(hb, r["ind"], len(T) - 1, allowed)
+        refine_times(r["trades"], m1)
         res[key] = r
 
     def pos_info(r):
@@ -349,18 +338,17 @@ def main():
             d["pending_exit"] = f"{why_text(r['pending_exit']) or '出場條件成立'}：下一根 K 開盤出場"
         return d
 
-    def sig_time(x, mn):
-        """訊號確認（K 棒收完）的時間 = 訊號 K 的結束。"""
-        return x["t"] + dt.timedelta(minutes=mn)
+    def sig_time(x):
+        """訊號確認（K 棒收完）的時間 = 訊號 60 分K 的結束。"""
+        return x["t"] + dt.timedelta(minutes=60)
 
     def sig_info(r):
         x = r["sig"]
         if not x:
             return None
-        sig_t = lambda x: sig_time(x, r["mn"])
         return {"side": "多" if x["side"] > 0 else "空", "kind": x["kind"], "entry": round(x["entry"]),
-                "stop": round(x["stop0"]), "R": round(x["R"]), "at": f"{sig_t(x):%m-%d %H:%M}",
-                "lag": max(0, round((now - sig_t(x)).total_seconds() / 60))}
+                "stop": round(x["stop0"]), "R": round(x["R"]), "at": f"{sig_time(x):%m-%d %H:%M}",
+                "lag": max(0, round((now - sig_time(x)).total_seconds() / 60))}
 
     def events(r):
         """上一次網頁更新之後發生的進出場（排程延誤或漏跑時，中間發生的事會在這裡補講）。"""
@@ -370,7 +358,7 @@ def main():
         for x in r["trades"]:
             side = "多" if x["side"] > 0 else "空"
             if x["entry_t"] > prev_gen:
-                st = sig_time(x, r["mn"])
+                st = sig_time(x)
                 out.append(f"{x['entry_t']:%m-%d %H:%M} {side}單進場 {x['entry']:,.0f}（訊號 {st:%m-%d %H:%M} 成立，"
                            f"網頁 {now:%m-%d %H:%M} 才更新到，晚了 {fmt_lag((now - st).total_seconds() / 60)}）")
             if not x["open"] and x["exit_t"] > prev_gen:
@@ -378,37 +366,37 @@ def main():
         return out
 
     def rec(r):
-        tr = [trade_row(x, last_c, r["fwd"]) for x in r["trades"]]
+        tr = [trade_row(x, last_c) for x in r["trades"]]
         fwd = [x for x in tr if x["phase"] == "前測"]
         bt = [x for x in tr if x["phase"] == "回測"]
         def summ(rs):
             closed = [x for x in rs if not x["open"]]
             return {"n": len(closed), "win": sum(x["r"] > 0.1 for x in closed), "R": round(sum(x["r"] for x in closed), 1),
                     "twd": sum(x["twd"] for x in rs)}
-        return {"forward": fwd, "backtest": bt, "fsum": summ(fwd), "bsum": summ(bt), "fstart": f"{r['fwd']:%Y/%m/%d %H:%M}"}
+        return {"forward": fwd, "backtest": bt, "fsum": summ(fwd), "bsum": summ(bt)}
 
-    def levels(ind):
-        return {k: round(ind[k][-1]) for k in ("E20", "E60", "ATR")} | \
-               {"BBU": round(ind["MID"][-1] + 2 * ind["SD"][-1]), "BBL": round(ind["MID"][-1] - 2 * ind["SD"][-1])}
+    ind = res["v3"]["ind"]
+    levels = {k: round(ind[k][-1]) for k in ("E20", "E60", "ATR")} | \
+             {"BBU": round(ind["MID"][-1] + 2 * ind["SD"][-1]), "BBL": round(ind["MID"][-1] - 2 * ind["SD"][-1])}
     data = {
         "generated": f"{now:%Y-%m-%d %H:%M}", "prev_generated": f"{prev_gen:%Y-%m-%d %H:%M}" if prev_gen else "",
         "gap": [f"{g:%m-%d %H:%M}" for g in gap],
         "last_price": last_c, "history_last": f"{hist_last:%Y-%m-%d %H:%M}", "live_minutes_added": added, "live": info,
     }
-    for key, _, mn, _ in STRATS:
+    for key, _ in STRATS:
         r = res[key]
-        data[key] = {"minutes": mn, "bar": f"{hbs[mn][0][-1]:%Y-%m-%d %H:%M}", "bar_end": f"{bar_end[mn]:%H:%M}",
-                     "forming": now < bar_end[mn], "pos": pos_info(r), "sig": sig_info(r), "checks": r["checks"],
-                     "record": rec(r), "events": events(r), "levels": levels(r["ind"])}
+        data[key] = {"bar": f"{T[-1]:%Y-%m-%d %H:%M}", "bar_end": f"{v3_end:%H:%M}", "forming": v3_forming,
+                     "pos": pos_info(r), "sig": sig_info(r), "checks": r["checks"], "record": rec(r), "events": events(r),
+                     "levels": levels}
     os.makedirs(a.out, exist_ok=True)
     json.dump(data, open(os.path.join(a.out, "live.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
     open(os.path.join(a.out, "live.html"), "w", encoding="utf-8").write(render(data, now))
     tws = trades_page.twii_backtests(load(a.twii), refine_times)
-    tx = {key: [trade_row(x, last_c, fwd) for x in res[key]["trades"]] for key, _, _, fwd in STRATS}
+    tx = {key: [trade_row(x, last_c) for x in res[key]["trades"]] for key, _ in STRATS}
     open(os.path.join(a.out, "trades.html"), "w", encoding="utf-8").write(
         trades_page.render(tx, tws, now, last_c, f"{T[0]:%Y-%m-%d}", (CAP, MULT, FEE, COST), trade_row))
     print(f"現價 {last_c:,.0f}；history 到 {hist_last}，補上即時 {added} 分鐘；" + "；".join(
-        f"{NAMES[k]} {'持倉' if res[k]['pos'] else '空手'}{'、訊號' if res[k]['sig'] else ''}" for k, *_ in STRATS))
+        f"{NAMES[k]} {'持倉' if res[k]['pos'] else '空手'}{'、訊號' if res[k]['sig'] else ''}" for k, _ in STRATS))
 
 
 # ---------- 網頁 ----------
@@ -453,8 +441,7 @@ def checks_html(chk):
 
 def strat_card(name, sub, s, prev_gen_txt=""):
     pos, sig = s["pos"], s["sig"]
-    mn = s.get("minutes", 60)
-    bar_txt = (f"最後一根 {mn} 分K：{s['bar'][5:]} 起{'，形成中（' + s['bar_end'] + ' 收）' if s['forming'] else '，已收完'}")
+    bar_txt = (f"最後一根 60 分K：{s['bar'][5:]} 起{'，形成中（' + s['bar_end'] + ' 收）' if s['forming'] else '，已收完'}")
     if pos:
         st_cls = "long" if pos["side"] == "多" else "short"
         status = f'<span class="state {st_cls}">持{pos["side"]}單</span>'
@@ -471,7 +458,7 @@ def strat_card(name, sub, s, prev_gen_txt=""):
         status = '<span class="state flat">空手</span>'
         body = ""
     if sig:
-        when = f"下一根 {mn} 分K 開盤進場"
+        when = "下一根 60 分K 開盤進場"
         tag = "形成中：若以現價收K" if s["forming"] else f"訊號 {sig['at']} 成立" + (f"（網頁晚了 {fmt_lag(sig['lag'])}才更新到）" if sig["lag"] > 10 else "")
         body = (f'<p class="alert sig">● {tag}，做{sig["side"]}（{esc(sig["kind"])}）→ {when}，'
                 f'參考價 {sig["entry"]:,}、停損 {sig["stop"]:,}（{sig["R"]:,} 點）</p>') + body
@@ -507,7 +494,7 @@ def record_html(title, r):
         return f'<div class="scroll"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
     fs, bs = r["fsum"], r["bsum"]
     return f"""<section class="card"><h2>{esc(title)}</h2>
-<p class="sub">前測（{r.get('fstart', f'{FORWARD_START:%Y/%m/%d}')} 起）已出場 {fs['n']} 筆、賺 {fs['win']} 筆、合計 {fs['R']:+.1f}R、{money(fs['twd'])} 元（含未實現）</p>
+<p class="sub">前測（{FORWARD_START:%Y/%m/%d} 起）已出場 {fs['n']} 筆、賺 {fs['win']} 筆、合計 {fs['R']:+.1f}R、{money(fs['twd'])} 元（含未實現）</p>
 {table(r['forward'])}
 <p class="sub">前測開始前（台指期累積資料回測）：{bs['n']} 筆 {bs['R']:+.1f}R、{money(bs['twd'])} 元・<a href="trades.html">完整歷史成交紀錄 →</a></p>
 </section>"""
@@ -522,7 +509,6 @@ def render(d, now):
            f'指標與訊號可能不準，等下一次補抓。</p>' if d.get("gap") else "")
     dst = us_dst(now)
     night_win = "21:00–23:00" if dst else "22:00–00:00"
-    night_win30 = "21:00–23:30" if dst else "22:00–00:30"
     return f"""<!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="refresh" content="600">
@@ -582,26 +568,18 @@ footer {{ margin:20px 0 40px; }}
 {strat_card("v3 不限時段・60 分K", "規則跟 v3 一樣，但日盤、夜盤任何一根 60 分K 收完都可以開新倉", d["v3all"], d["prev_generated"][5:])}
 </div>
 <div class="cols">
-{strat_card("v3・30 分K（限時段）", f"同一套 v3 規則改用 30 分K，收完才看訊號；開倉時段同 60 分K 版（日盤 08:45–12:15、夜盤 {night_win30} 開始的 30 分K）", d["v3_30"], d["prev_generated"][5:])}
-{strat_card("v3 不限時段・30 分K", "同一套 v3 規則改用 30 分K，日盤、夜盤任何一根 30 分K 收完都可以開新倉", d["v3all_30"], d["prev_generated"][5:])}
-</div>
-<div class="cols">
 {record_html("v3（限時段）模擬交易紀錄", d["v3"]["record"])}
 {record_html("v3 不限時段 模擬交易紀錄", d["v3all"]["record"])}
-</div>
-<div class="cols">
-{record_html("v3・30 分K（限時段）模擬交易紀錄", d["v3_30"]["record"])}
-{record_html("v3 不限時段・30 分K 模擬交易紀錄", d["v3all_30"]["record"])}
 </div>
 <footer>
 <p class="note">GitHub Actions 在交易時段大約每 30 分鐘更新一次：日盤台北 08:48–13:48（:18、:48），
 夜盤 15:04–05:04（:04、:34）。GitHub 的排程是盡力而為，常晚 5–30 分鐘，偶爾會漏跑，所以請看上面的「資料到」時間，不要拿這頁當下單依據。
 每次更新都從期交所重新抓整個日盤、夜盤的 1 分K，從頭重算 K 棒、部位與停損，所以中間漏跑幾次不會漏掉 K 棒，也不會漏掉停損；
 晚到的進出場會在卡片上標「上次更新之後」並寫晚了幾分鐘。每天 06:30 的存檔若漏跑，下一次更新發現缺盤會自動去期交所補抓。</p>
-<p class="note">「形成中」表示那根 K 還沒收完，條件是用現價先算，收K前都可能變。每個版本的訊號都要等自己的 K 棒（60 或 30 分K）收完、下一根開盤才進場；各版本獨立計算，同一時間可能一邊持倉、一邊空手。
+<p class="note">「形成中」表示那根 K 還沒收完，條件是用現價先算，收K前都可能變。兩個版本的訊號都要等 60 分K 收完、下一根開盤才進場；兩版各自獨立計算，同一時間可能一邊持倉、一邊空手。
 試算：本金 20 萬、1 口微台（每點 10 元）、每次下單 25 元；R 是以初始停損點數為 1 的倍數。</p>
-<p class="note"><b>資料：訊號、部位、停損都只用台指期近月（TX）日盤＋夜盤 60 分K／30 分K</b>：期交所每筆成交轉 1 分K（history 到 {esc(d['history_last'])}）＋期交所即時 1 分K。
-加權指數只是歷史成交紀錄頁裡的回測資料，不用在這頁。規則：<code>strategy/v3.py</code> 的 V3；限時段用 <code>backtest.tx_revised</code>（30 分K 用 <code>tx_revised30</code>），不限時段版不套時段濾網；30 分K 版參數跟 60 分K 完全相同（EMA20/60、布林 20、ATR 都是同樣根數）。
+<p class="note"><b>資料：訊號、部位、停損都只用台指期近月（TX）日盤＋夜盤 60 分K</b>：期交所每筆成交轉 1 分K（history 到 {esc(d['history_last'])}）＋期交所即時 1 分K。
+加權指數只是歷史成交紀錄頁裡的回測資料，不用在這頁。規則：<code>strategy/v3.py</code> 的 V3；限時段用 <code>backtest.tx_revised</code>，不限時段版不套時段濾網。
 <a href="trades.html">歷史成交紀錄</a>・<a href="strategy.html">v3 前測（每日）</a>・<a href="index.html">選擇權盤面</a></p>
 </footer>
 </main>

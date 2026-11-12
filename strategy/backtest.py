@@ -49,17 +49,6 @@ def tx_revised(t):
     return hm in (("21:00", "22:00", "23:00") if us_dst(t) else ("22:00", "23:00", "00:00"))
 
 
-def tx_revised30(t):
-    """30 分K 版的開倉時段：落在 tx_revised 可開倉那根 60 分K 裡的 30 分K 都可以開
-    （日盤 08:45–12:15、夜盤 21:00–23:30／美國冬令 22:00–00:30 開始的 30 分K）。"""
-    if dt.time(8, 45) <= t.time() <= dt.time(13, 45):
-        base = dt.datetime.combine(t.date(), dt.time(8, 45))
-    else:
-        d = t.date() if t.time() >= dt.time(15, 0) else t.date() - dt.timedelta(days=1)
-        base = dt.datetime.combine(d, dt.time(15, 0))
-    return tx_revised(base + dt.timedelta(hours=int((t - base).total_seconds() // 3600)))
-
-
 def twii_draft(t):
     return t.hour in (9, 10, 11)
 
