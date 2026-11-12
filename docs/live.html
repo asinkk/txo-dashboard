@@ -48,8 +48,8 @@ a { color:var(--accent); }
 footer { margin:20px 0 40px; }
 </style></head><body><main>
 <div class="top"><div><h1>台指策略即時訊號</h1>
-<p class="asof">休市・網頁產生於台北 2026-11-13 06:03（<span id="age">—</span>）</p></div>
-<div style="text-align:right"><p class="price">43,676</p><p class="asof">台指期近月（日盤＋夜盤）・資料到 日盤 11-12 13:44・夜盤 11-13 04:59</p></div></div>
+<p class="asof">休市・網頁產生於台北 2026-11-13 06:30（<span id="age">—</span>）</p></div>
+<div style="text-align:right"><p class="price">43,676</p><p class="asof">台指期近月（日盤＋夜盤）・資料到 夜盤 11-13 04:59</p></div></div>
 <p class="alert" id="stale" hidden></p>
 
 <div class="cols">
@@ -97,7 +97,7 @@ footer { margin:20px 0 40px; }
 晚到的進出場會在卡片上標「上次更新之後」並寫晚了幾分鐘。每天 06:30 的存檔若漏跑，下一次更新發現缺盤會自動去期交所補抓。</p>
 <p class="note">「形成中」表示那根 K 還沒收完，條件是用現價先算，收K前都可能變。兩個版本的訊號都要等 60 分K 收完、下一根開盤才進場；兩版各自獨立計算，同一時間可能一邊持倉、一邊空手。
 試算：本金 20 萬、1 口微台（每點 10 元）、每次下單 25 元；R 是以初始停損點數為 1 的倍數。</p>
-<p class="note"><b>資料：訊號、部位、停損都只用台指期近月（TX）日盤＋夜盤 60 分K</b>：期交所每筆成交轉 1 分K（history 到 2026-11-12 04:59）＋期交所即時 1 分K。
+<p class="note"><b>資料：訊號、部位、停損都只用台指期近月（TX）日盤＋夜盤 60 分K</b>：期交所每筆成交轉 1 分K（history 到 2026-11-13 04:59）＋期交所即時 1 分K。
 加權指數只是歷史成交紀錄頁裡的回測資料，不用在這頁。規則：<code>strategy/v3.py</code> 的 V3；限時段用 <code>backtest.tx_revised</code>，不限時段版不套時段濾網。
 <a href="trades.html">歷史成交紀錄</a>・<a href="strategy.html">v3 前測（每日）</a>・<a href="index.html">選擇權盤面</a></p>
 </footer>
@@ -105,7 +105,7 @@ footer { margin:20px 0 40px; }
 <script>
 (function () {
   // 用看網頁的人的時鐘算這頁多久沒更新；交易時段超過 45 分鐘就提醒（GitHub 排程延遲或漏跑）
-  var gen = new Date("2026-11-13T06:03:00+08:00"), now = new Date();
+  var gen = new Date("2026-11-13T06:30:00+08:00"), now = new Date();
   var m = Math.round((now - gen) / 60000);
   var age = document.getElementById("age");
   if (age) age.textContent = m < 1 ? "剛剛" : m < 120 ? m + " 分鐘前" : Math.round(m / 60) + " 小時前";

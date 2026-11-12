@@ -1,20 +1,11 @@
 {
- "generated": "2026-11-13 06:03",
- "prev_generated": "2026-11-13 05:04",
+ "generated": "2026-11-13 06:30",
+ "prev_generated": "2026-11-13 06:03",
  "gap": [],
  "last_price": 43676.0,
- "history_last": "2026-11-12 04:59",
- "live_minutes_added": 1138,
+ "history_last": "2026-11-13 04:59",
+ "live_minutes_added": 0,
  "live": {
-  "日盤": {
-   "symbol": "TXFK6-F",
-   "name": "臺指期116",
-   "last": 43178.0,
-   "ref": 44136.0,
-   "date": "20261112",
-   "last_minute": "2026-11-12 13:44",
-   "minutes": 300
-  },
   "夜盤": {
    "symbol": "TXFK6-M",
    "name": "臺指期116",
