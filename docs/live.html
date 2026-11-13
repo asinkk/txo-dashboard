@@ -48,7 +48,7 @@ a { color:var(--accent); }
 footer { margin:20px 0 40px; }
 </style></head><body><main>
 <div class="top"><div><h1>台指策略即時訊號</h1>
-<p class="asof">休市・網頁產生於台北 2026-11-14 05:04（<span id="age">—</span>）</p></div>
+<p class="asof">休市・網頁產生於台北 2026-11-14 05:29（<span id="age">—</span>）</p></div>
 <div style="text-align:right"><p class="price">43,706</p><p class="asof">台指期近月（日盤＋夜盤）・資料到 日盤 11-13 13:44・夜盤 11-14 04:59</p></div></div>
 <p class="alert" id="stale" hidden></p>
 
@@ -95,7 +95,7 @@ footer { margin:20px 0 40px; }
 <script>
 (function () {
   // 用看網頁的人的時鐘算這頁多久沒更新；交易時段超過 45 分鐘就提醒（GitHub 排程延遲或漏跑）
-  var gen = new Date("2026-11-14T05:04:00+08:00"), now = new Date();
+  var gen = new Date("2026-11-14T05:29:00+08:00"), now = new Date();
   var m = Math.round((now - gen) / 60000);
   var age = document.getElementById("age");
   if (age) age.textContent = m < 1 ? "剛剛" : m < 120 ? m + " 分鐘前" : Math.round(m / 60) + " 小時前";
