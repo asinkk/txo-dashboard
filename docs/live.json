@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-21 06:29",
- "prev_generated": "2026-11-21 05:04",
+ "generated": "2026-11-21 06:30",
+ "prev_generated": "2026-11-21 06:29",
  "gap": [],
  "last_price": 33919.0,
- "history_last": "2026-11-20 04:59",
- "live_minutes_added": 1140,
+ "history_last": "2026-11-21 04:59",
+ "live_minutes_added": 0,
  "live": {
   "日盤": {
    "symbol": "TXFL6-F",
