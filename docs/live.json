@@ -1,19 +1,13 @@
 {
- "generated": "2026-11-21 06:30",
- "prev_generated": "2026-11-21 06:29",
+ "generated": "2026-11-21 10:05",
+ "prev_generated": "2026-11-21 06:30",
  "gap": [],
  "last_price": 33919.0,
  "history_last": "2026-11-21 04:59",
  "live_minutes_added": 0,
  "live": {
   "日盤": {
-   "symbol": "TXFL6-F",
-   "name": "臺指期126",
-   "last": 35875.0,
-   "ref": 38607.0,
-   "date": "20261120",
-   "last_minute": "2026-11-20 13:44",
-   "minutes": 300
+   "error": "報價清單抓取失敗：HTTP Error 522: <none>"
   },
   "夜盤": {
    "symbol": "TXFL6-M",
